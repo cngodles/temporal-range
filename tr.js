@@ -1,27 +1,30 @@
 
-var timebase = [];
+//var timebase = [];
 var paper;
+var dwn;
 window.onload = function(){
-  var timelinediv = document.getElementById("timeline");
   
-  timebase['x'] = 20;
-  timebase['y'] = 0;
-  timebase['scale'] = 2;
-  timebase['max'] = 541;
+  temporal.init();
+  
+  
+  /*
+  temporal.canvas = document.getElementById("timeline");
+  temporal.timebase['x'] = 20;
+  temporal.timebase['y'] = 0;
+  var scale = 2;
+  temporal.timebase['max'] = 541;
   //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
 
-  paper = timelinediv.getContext('2d');
-  drawTimeline(geologictimeeons2, 20, 25, timebase['scale']);
-  drawTimeline(geologictimeperiods, 45, 25, timebase['scale']);
-  //drawExistanceBar(creature1, 65, 10, timebase['scale']);
-  
-  
+  temporal.paper = temporal.canvas.getContext('2d');
+  temporal.drawTimeline(geologictimeeons2, 20, 25, scale);
+  temporal.drawTimeline(geologictimeperiods, 45, 25, scale);
+  temporal.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, scale);
+  */
+  dwn = document.getElementById('btndownload');
+  dwn.onclick = function(){
+    temporal.download(timelinediv, 'myimage.png');
+  }
 }
-//var paper = Raphael(document.getElementById("timeline"), svgwidth, 120);
-
-//var alltime = paper.rect(timebase['x'], timebase['y'], 1200, 300, 0);
-//alltime.attr("fill", "#ddd");
-//alltime.attr("stroke", "#202020");
 
 var geologictimeeons = [
   ['Cenozoic','rgb(246,236,57)',66],
@@ -38,10 +41,6 @@ var geologictimeeons2 = [
   ['Paleozoic', 'rgb(146,195,160)', 541, 'Paleo']
 ];
 
-var creature1 = ['Petalodus','rgb(60, 60, 60)', 268, 318.1];
-var creature2 = ['Us','rgb(60, 60, 60)', 0, 0];
-var creature3 = ['Mourlonia', 'rgb(60, 60, 60)', 0.012, 466];
-
 var geologictimeperiods = [
   ['Quanternary','rgb(254,246,145)', 2.58, ''],
   ['Neogene','rgb(254,221,45)', 23.03, 'N'],
@@ -57,85 +56,114 @@ var geologictimeperiods = [
   ['Cambrian','rgb(129,170,114)', 541, 'Є']
 ];
 
-function drawTimeline(data, topOffset, height, scale){
-  var eon = [];
-  var eonX = timebase['x'];
-  var drawtimebase = 0;
-  for(var i = 0; i < data.length; i++){
-    var reallength = data[i][2] - drawtimebase;
+var temporal = {
+  paper:null,
+  timebase:[],
+  canvas:null,
+  init:function(){
+    //Draw demo chart.
+    this.canvas = document.getElementById("timeline");
+    this.timebase['x'] = 20;
+    this.timebase['y'] = 0;
+    var scale = 2;
+    this.timebase['max'] = 541;
+    //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
+
+    this.paper = temporal.canvas.getContext('2d');
+    
+    //Draw sample timeline.
+    this.drawTimeline(geologictimeeons2, 20, 25, scale);
+    this.drawTimeline(geologictimeperiods, 45, 25, scale);
+    //this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, scale);
+  },
+  tryTimeline:function(){
+    
+  },
+  drawTimeline:function(data, topOffset, height, scale){
+    //var eon = [];
+    var eonX = this.timebase['x'];
+    var drawtimebase = 0;
+    for(var i = 0; i < data.length; i++){
+      var reallength = data[i][2] - drawtimebase;
+      var barlength = reallength * scale;
+      reallength.toFixed(2);
+      barlength.toFixed(2);
+      var name;
+      if(scale > 1){
+        name = data[i][0];
+      } else {
+        name = data[i][3];
+      }
+      var texttop = this.timebase['y'] + topOffset + 12;
+
+      this.paper.beginPath();
+      this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+      this.paper.fillStyle = data[i][1];
+      this.paper.lineWidth = 1;
+      this.paper.strokeStyle = 'black';
+      this.paper.fill();
+      this.paper.stroke();
+      this.paper.font = "400 12px sans-serif";
+      this.paper.fillStyle = "#000";
+      this.paper.fillText(name, eonX+4, texttop);    
+
+      console.log(name, eonX+4, texttop);
+
+      eonX += barlength;
+      drawtimebase += reallength;
+    }
+  },
+  drawExistanceBar:function(name, color, start, finish, topOffset, height, scale){
+    //var creature = [];
+    var creatureX = this.timebase['x'] + (start * scale);
+    //var drawtimebase = 0;
+    var reallength = finish - start;
     var barlength = reallength * scale;
+
+    var textcenter = creatureX + (barlength / 2);
+    var texttop = this.timebase['y'] + topOffset + height + 15;
+    var textname = name;
+    var textage = start+' to '+finish+ ' Mya';
+
     reallength.toFixed(2);
     barlength.toFixed(2);
-    
-    paper.beginPath();
-    paper.rect(eonX, timebase['y'] + topOffset, barlength, height);
-    paper.fillStyle = data[i][1];
-    paper.fill();
-    
-    //eon[data[i][0]] = paper.rect(eonX, timebase['y'] + topOffset, barlength, height, 0);
-    //eon[data[i][0]].attr("fill", data[i][1]);
-    //eon[data[i][0]].data("name", data[i][0]);
-    /*
-    var name;
-    if(scale > 1){
-      name = data[i][0];
-    } else {
-      name = data[i][3];
+
+    this.paper.beginPath();
+    this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
+    this.paper.fillStyle = color;
+    this.paper.fill();
+
+    this.paper.textAlign = "center";
+    this.paper.font = "700 16px sans-serif";
+    this.paper.fillText(textname, textcenter, texttop);
+    this.paper.font = "700 13px sans-serif";
+    this.paper.fillText(textage, textcenter, texttop +20);
+
+    console.log(name, barlength, creatureX, start);
+  },
+  download:function(paper, filename) {
+    /// create an "off-screen" anchor tag
+    var lnk = document.createElement('a'), e;
+
+    /// the key here is to set the download attribute of the a tag
+    lnk.download = filename;
+
+    /// convert canvas content to data-uri for link. When download
+    /// attribute is set the content pointed to by link will be
+    /// pushed as "download" in HTML5 capable browsers
+    lnk.href = paper.toDataURL("image/png;base64");
+
+    /// create a "fake" click-event to trigger the download
+    if (document.createEvent) {
+      e = document.createEvent("MouseEvents");
+      e.initMouseEvent("click", true, true, window,
+                       0, 0, 0, 0, 0, false, false, false,
+                       false, 0, null);
+
+      lnk.dispatchEvent(e);
+    } else if (lnk.fireEvent) {
+      lnk.fireEvent("onclick");
     }
-    var texttop = timebase['y'] + topOffset + 10;
-    paper
-      .text(eonX+4, texttop, name)
-      .attr("text-anchor", "start")
-      .attr("font-size", "12px");
-    */
-    eonX += barlength;
-    drawtimebase += reallength;
-  }
-}
-
-function drawExistanceBar(data, topOffset, height, scale){
-  var creature = [];
-  var creatureX = timebase['x'] + (data[2] * scale);
-  var drawtimebase = 0;
-  var reallength = data[3] - data[2];
-  var barlength = reallength * scale;
-  var textcenter = creatureX + (barlength / 2);
-  
-  reallength.toFixed(2);
-  barlength.toFixed(2);
-  creature[data[0]] = paper.rect(creatureX, timebase['y'] + topOffset, barlength, height, 0);
-  creature[data[0]].attr("fill", data[1]);
-  creature[data[0]].data("name", data[0]);
-  var texttop = timebase['y'] + topOffset + height + 10;
-  
-  paper.text(textcenter, texttop, data[0]).attr("font-size", "16px").attr("font-weight", "700");
-  paper.text(textcenter, texttop + 20, data[2]+' to '+data[3]+ ' Mya').attr("font-size", "12px");
-  console.log(data, barlength, creatureX, data[2]);
-}
-
-/* Canvas Download */
-function download(canvas, filename) {
-  /// create an "off-screen" anchor tag
-  var lnk = document.createElement('a'), e;
-
-  /// the key here is to set the download attribute of the a tag
-  lnk.download = filename;
-
-  /// convert canvas content to data-uri for link. When download
-  /// attribute is set the content pointed to by link will be
-  /// pushed as "download" in HTML5 capable browsers
-  lnk.href = canvas.toDataURL("image/png;base64");
-
-  /// create a "fake" click-event to trigger the download
-  if (document.createEvent) {
-    e = document.createEvent("MouseEvents");
-    e.initMouseEvent("click", true, true, window,
-                     0, 0, 0, 0, 0, false, false, false,
-                     false, 0, null);
-
-    lnk.dispatchEvent(e);
-  } else if (lnk.fireEvent) {
-    lnk.fireEvent("onclick");
   }
 }
 

@@ -8,7 +8,33 @@
 
 <body>
   <h1>Create a Temporal Range</h1>
-  <canvas id="timeline" width="1000" height="200"></canvas>
+  <form id="set-chart" onSubmit="return false;">
+    <div>
+      <label for="range-type">Select a type:</label>
+      <select name="range-type" id="range-type">
+        <option value="1">Cenozoic (0-66 MYA)</option>
+        <option value="2">Mesozoic (66-251.9 MYA)</option>
+        <option value="3">Paleozoic (251.9-541 MYA)</option>
+        <option value="4" selected="selected">Cenozoic - Paleozoic (0-541 MYA)</option>
+      </select>
+    </div>
+    <div>
+      <label for="creature-name">Creature Name:</label>
+      <input type="text" name="creature-name" id="creature-name">
+    </div>
+    <div>
+      <label for="range-1">Range Start:</label>
+      <input type="text" name="range-1" id="range-1">
+      <p>Must be a number from 0 to 541</p>
+    </div>
+    <div>
+      <label for="range-2">Range End:</label>
+      <input type="text" name="range-2" id="range-2">
+      <p>Must be a number from 0 to 541 and less than the start range</p>
+    </div>
+    <input type="submit" value="Generate Chart!">
+  </form>
+  <canvas id="timeline" width="1200" height="200"></canvas>
   <button id="btndownload">Download</button>
   <script src="tr.js"></script>
 </body>
