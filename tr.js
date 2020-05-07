@@ -5,21 +5,6 @@ var dwn;
 window.onload = function(){
   
   temporal.init();
-  
-  
-  /*
-  temporal.canvas = document.getElementById("timeline");
-  temporal.timebase['x'] = 20;
-  temporal.timebase['y'] = 0;
-  var scale = 2;
-  temporal.timebase['max'] = 541;
-  //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
-
-  temporal.paper = temporal.canvas.getContext('2d');
-  temporal.drawTimeline(geologictimeeons2, 20, 25, scale);
-  temporal.drawTimeline(geologictimeperiods, 45, 25, scale);
-  temporal.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, scale);
-  */
   dwn = document.getElementById('btndownload');
   dwn.onclick = function(){
     temporal.download(timelinediv, 'myimage.png');
