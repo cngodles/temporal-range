@@ -1,15 +1,19 @@
 
 //var timebase = [];
-var paper;
-var dwn;
-window.onload = function(){
-  
+//var paper;
+//var dwn;
+$(document)
+.ready(function(){
   temporal.init();
-  dwn = document.getElementById('btndownload');
-  dwn.onclick = function(){
-    temporal.download(timelinediv, 'myimage.png');
-  }
-}
+})
+.on("click", "#btndownload", function(){
+  temporal.download(temporal.timelinediv, 'myimage.png');
+})
+.on("submit", "#set-chart", function(e){
+  e.preventDefault();
+  temporal.tryTimeline();
+})
+;
 
 var geologictimeeons = [
   ['Cenozoic','rgb(246,236,57)',66],
@@ -45,23 +49,39 @@ var temporal = {
   paper:null,
   timebase:[],
   canvas:null,
+  scale:2,
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
     this.timebase['x'] = 20;
     this.timebase['y'] = 0;
-    var scale = 2;
+    this.scale = 2;
     this.timebase['max'] = 541;
     //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
 
     this.paper = temporal.canvas.getContext('2d');
     
     //Draw sample timeline.
-    this.drawTimeline(geologictimeeons2, 20, 25, scale);
-    this.drawTimeline(geologictimeperiods, 45, 25, scale);
-    //this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, scale);
+    this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
+    this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
+    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, this.scale);
   },
   tryTimeline:function(){
+    this.paper.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //Get form values
+    var rangetype = $("#range-type").val();
+    var creaturename = $("#creature-name").val();
+    var range1 = parseFloat($("#range-1").val());
+    var range2 = parseFloat($("#range-2").val());
+    if(range1 <= 541 && range2 <= 541 && range1 >= 0 && range2 > 0 && range1 < range2){
+      this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
+      this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
+      this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 65, 10, this.scale);
+    } else {
+      alert("Must fall within range!");
+      return false;
+    }
+    
     
   },
   drawTimeline:function(data, topOffset, height, scale){
@@ -88,6 +108,7 @@ var temporal = {
       this.paper.strokeStyle = 'black';
       this.paper.fill();
       this.paper.stroke();
+      this.paper.textAlign = "left";
       this.paper.font = "400 12px sans-serif";
       this.paper.fillStyle = "#000";
       this.paper.fillText(name, eonX+4, texttop);    
@@ -106,7 +127,7 @@ var temporal = {
     var barlength = reallength * scale;
 
     var textcenter = creatureX + (barlength / 2);
-    var texttop = this.timebase['y'] + topOffset + height + 15;
+    var texttop = this.timebase['y'] + topOffset + height + 18;
     var textname = name;
     var textage = start+' to '+finish+ ' Mya';
 
@@ -119,9 +140,9 @@ var temporal = {
     this.paper.fill();
 
     this.paper.textAlign = "center";
-    this.paper.font = "700 16px sans-serif";
+    this.paper.font = "700 20px sans-serif";
     this.paper.fillText(textname, textcenter, texttop);
-    this.paper.font = "700 13px sans-serif";
+    this.paper.font = "700 15px sans-serif";
     this.paper.fillText(textage, textcenter, texttop +20);
 
     console.log(name, barlength, creatureX, start);
@@ -136,7 +157,7 @@ var temporal = {
     /// convert canvas content to data-uri for link. When download
     /// attribute is set the content pointed to by link will be
     /// pushed as "download" in HTML5 capable browsers
-    lnk.href = paper.toDataURL("image/png;base64");
+    lnk.href = this.canvas.toDataURL("image/png;base64");
 
     /// create a "fake" click-event to trigger the download
     if (document.createEvent) {
@@ -152,9 +173,3 @@ var temporal = {
   }
 }
 
-
-//drawTimeline(geologictimeeons, 0, 50, 0.25);
-//drawTimeline(geologictimeeons2, 20, 25, timebase['scale']);
-//drawTimeline(geologictimeperiods, 45, 25, timebase['scale']);
-//drawExistanceBar(creature1, 65, 10, timebase['scale']);
-//drawExistanceBar(creature2, 180, 20, 2);
