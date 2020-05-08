@@ -53,13 +53,37 @@ var temporal = {
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
-    this.timebase['x'] = 20;
+    this.timebase['x'] = 40;
     this.timebase['y'] = 0;
+    //pixels per MY
     this.scale = 2;
     this.timebase['max'] = 541;
     //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
+    
+    
+    var size = [];
+    size['w'] = 1162;
+    size['h'] = 140;
+    this.canvas.style.width = size['w'] + "px";
+    this.canvas.style.height = size['h'] + "px";
 
-    this.paper = temporal.canvas.getContext('2d');
+    // Set actual size in memory (scaled to account for extra pixel density).
+    var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    this.canvas.width = Math.floor(size['w'] * devicescale);
+    this.canvas.height = Math.floor(size['h'] * devicescale);
+    
+    this.paper = this.canvas.getContext('2d');
+    this.paper.scale(devicescale, devicescale);
+    
+    /*
+    
+    
+    
+    
+    this.canvas.style.width = 2324;
+    this.canvas.style.height = 800;
+    */
+    
     
     //Draw sample timeline.
     this.drawTimeline(geologictimeeons2, 20, 25, this.scale);

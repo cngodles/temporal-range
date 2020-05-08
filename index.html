@@ -2,40 +2,51 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Temporal Range Generator</title>
-  <link type="text/css" href="tr.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Temporal Range ChartGenerator</title>
+  <link type="text/css" rel="stylesheet" href="tr.css">
 </head>
 
 <body>
-  <h1>Create a Temporal Range</h1>
-  <form id="set-chart" onSubmit="return false;">
-    <div>
-      <label for="range-type">Select a type:</label>
-      <select name="range-type" id="range-type">
-        <option value="1">Cenozoic (0-66 MYA)</option>
-        <option value="2">Mesozoic (66-251.9 MYA)</option>
-        <option value="3">Paleozoic (251.9-541 MYA)</option>
-        <option value="4" selected="selected">Cenozoic - Paleozoic (0-541 MYA)</option>
-      </select>
+  <div id="formframe">
+    <h1>Create a Temporal Range</h1>
+    <p>Enter a name and a geologic time range to generate a chart</p>
+    <form id="set-chart" onSubmit="return false;">
+      <div class="formpad">
+        <label for="range-type">Select a type:</label>
+        <select name="range-type" id="range-type">
+          <option value="1">Cenozoic (0-66 MYA)</option>
+          <option value="2">Mesozoic (66-251.9 MYA)</option>
+          <option value="3">Paleozoic (251.9-541 MYA)</option>
+          <option value="4" selected="selected">Cenozoic - Paleozoic (0-541 MYA)</option>
+        </select>
+      </div>
+      <div class="formpad">
+        <label for="creature-name">Creature Name:</label>
+        <input type="text" name="creature-name" id="creature-name" class="input-large">
+      </div>
+      <div class="formpad">
+        <label for="range-1">Range:</label>
+        <input type="text" name="range-1" id="range-1" class="input-small"> to 
+        <input type="text" name="range-2" id="range-2" class="input-small">
+        <p class="notes">Must be a number from 0 to 541.</p>
+      </div>
+      <div class="formpad">
+        <input type="submit" value="Generate Temporal Range Chart" class="btn">
+      </div>
+      
+    </form>
+  </div>
+  <div id="canvasscroll">
+    <div id="canvasbox">
+      <canvas id="timeline" width="1162" height="140"></canvas>
     </div>
-    <div>
-      <label for="creature-name">Creature Name:</label>
-      <input type="text" name="creature-name" id="creature-name">
-    </div>
-    <div>
-      <label for="range-1">Range Start:</label>
-      <input type="text" name="range-1" id="range-1">
-      <p>Must be a number from 0 to 541</p>
-    </div>
-    <div>
-      <label for="range-2">Range End:</label>
-      <input type="text" name="range-2" id="range-2">
-      <p>Must be a number from 0 to 541 and less than the start range</p>
-    </div>
-    <input type="submit" value="Generate Chart!">
-  </form>
-  <canvas id="timeline" width="1200" height="200"></canvas>
-  <button id="btndownload">Download</button>
+  </div>
+  <div class="download-area">
+    <button id="btndownload" class="btn">Download as PNG</button>
+  </div>
   <p>Version 1.0</p>
   <script src="jquery-3.5.1.min.js"></script>
   <script src="tr.js"></script>
