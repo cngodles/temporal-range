@@ -24,6 +24,54 @@ var geologictimeeons = [
   ['Hadean','rgb(203,3,129)',4600]
 ];
 
+var geologicepochs = [
+  ['Holocene', 'rgb(254,241,224)', 0.0117],
+  ['Pleistocene', 'rgb(254,239,184)', 2.58],
+
+  ['Pliocene', 'rgb(254,248,166)', 5.333],
+  ['Miocene', 'rgb(254,239,0)', 23.03],
+
+  ['Oligocene', 'rgb(254,195,134)', 33.9],
+  ['Eocene', 'rgb(254,185,121)', 56],
+  ['Paleocene', 'rgb(254,173,110)', 66],
+
+  ['Late', 'rgb(166,212,104)', 100.5],
+  ['Early', 'rgb(126,205,116)', 145],
+
+  ['Late', 'rgb(151,227,250)', 163.5],
+  ['Middle', 'rgb(52,209,235)', 174.1],
+  ['Early', 'rgb(0,183,234)', 201.3],
+
+  ['Late', 'rgb(198,152,194)', 237],
+  ['Middle', 'rgb(191,124,177)', 247.2],
+  ['Early', 'rgb(173,87,154)', 251.902],
+
+  ['Lopingian', 'rgb(254,175,151)', 259.1],
+  ['Guadalupian', 'rgb(254,131,103)', 272.95],
+  ['Cisuralian', 'rgb(247,110,84)', 298.9],
+
+  ['Pennsylvania', 'rgb(138,198,195)', 332.2],
+  ['Mississippian', 'rgb(97,157,126)', 358.9],
+
+  ['Late', 'rgb(244,224,169)', 382.7],
+  ['Middle', 'rgb(246,200,122)', 393.3],
+  ['Early', 'rgb(239,176,99)', 419.2],
+
+  ['Pridoli', 'rgb(228,242,230)', 423],
+  ['Ludlow', 'rgb(180,229,219)', 427.4],
+  ['Wenlock', 'rgb(164,224,208)', 433.4],
+  ['Llandovery ', 'rgb(126,215,198)', 443.8],
+
+  ['Late', 'rgb(94,204,169)', 458.4],
+  ['Middle', 'rgb(0,189,151)', 470],
+  ['Early', 'rgb(0,175,137)', 485.4],
+
+  ['Furongian', 'rgb(173,221,168)', 497],
+  ['Miaolingian', 'rgb(161,207,155)', 509],
+  ['Series 2', 'rgb(149,194,143)', 521],
+  ['Terreneuvian', 'rgb(138,181,132)', 541]
+];
+
 var geologictimeeons2 = [
   ['Cenozoic', 'rgb(246,236,57)', 66, 'Ceno.'],
   ['Mesozoic', 'rgb(7,202,234)', 251.9, 'Meso.'],
@@ -63,7 +111,7 @@ var temporal = {
     
     var size = [];
     size['w'] = 1162;
-    size['h'] = 140;
+    size['h'] = 160;
     this.canvas.style.width = size['w'] + "px";
     this.canvas.style.height = size['h'] + "px";
 
@@ -88,7 +136,9 @@ var temporal = {
     //Draw sample timeline.
     this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
     this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 65, 10, this.scale);
+    this.drawTimeline(geologicepochs, 70, 25, this.scale);
+    
+    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
   },
   tryTimeline:function(){
     this.paper.clearRect(0, 0, this.canvas.width, this.canvas.height);
