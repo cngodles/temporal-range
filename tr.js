@@ -143,7 +143,7 @@ var temporal = {
     this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
     this.drawTimeline(geologicepochs, 70, 25, this.scale);
     
-    //this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
+    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
   },
   makeBackground:function(color){
     this.paper.beginPath();
@@ -184,7 +184,8 @@ var temporal = {
       this.makeBackground('#fff');
       this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
       this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-      this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 65, 10, this.scale);
+      this.drawTimeline(geologicepochs, 70, 25, this.scale);
+      this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 90, 10, this.scale);
     } else {
       alert("Must fall within range!");
       return false;
