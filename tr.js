@@ -102,6 +102,7 @@ var temporal = {
   timebase:[],
   canvas:null,
   scale:2,
+  margins:40,
   size:{
     'w':1162,
     'h':160
@@ -131,22 +132,24 @@ var temporal = {
     this.paper = this.canvas.getContext('2d');
     this.paper.scale(devicescale, devicescale);
     
-    /*
-    
-    
-    
-    
-    this.canvas.style.width = 2324;
-    this.canvas.style.height = 800;
-    */
-    
-    
+    //Make a true white background.
+    this.makeBackground('#fff');
     //Draw sample timeline.
+    geologictimeeons2.reverse(); 
+    geologictimeperiods.reverse();
+    geologicepochs.reverse();
+    
     this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
     this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-    //this.drawTimeline(geologicepochs, 70, 25, this.scale);
+    this.drawTimeline(geologicepochs, 70, 25, this.scale);
     
-    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
+    //this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
+  },
+  makeBackground:function(color){
+    this.paper.beginPath();
+    this.paper.rect(0, 0, this.size.w, this.size.h);
+    this.paper.fillStyle = color;
+    this.paper.fill();
   },
   tryTimeline:function(){
     this.paper.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -162,6 +165,7 @@ var temporal = {
       
       
       //var size = [];
+      
       this.size['w'] = (1000 * this.scale) + 80;
       this.size['h'] = 200;
       this.canvas.style.width = this.size['w'] + "px";
@@ -176,7 +180,8 @@ var temporal = {
       this.paper.scale(devicescale, devicescale);
       
       
-      
+      //Make a true white background.
+      this.makeBackground('#fff');
       this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
       this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
       this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 65, 10, this.scale);
@@ -189,11 +194,14 @@ var temporal = {
   },
   drawTimeline:function(data, topOffset, height, scale){
     //var eon = [];
-    var eonX = this.timebase['x'];
-    var drawtimebase = 0;
+    var eonX = this.margins;
+    var drawtimebase = this.size.w - this.margins;
     for(var i = 0; i < data.length; i++){
+      //['Cenozoic', 'rgb(246,236,57)', 0, 66, 'Ceno.']
       var reallength = data[i][3] - data[i][2];
       var barlength = reallength * scale;
+      eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+      
       reallength.toFixed(2);
       barlength.toFixed(2);
       var name;
@@ -206,6 +214,7 @@ var temporal = {
 
       this.paper.beginPath();
       this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+      //console.log(eonX, this.timebase['y'] + topOffset, barlength, height);
       this.paper.fillStyle = data[i][1];
       this.paper.lineWidth = 1;
       this.paper.strokeStyle = 'black';
@@ -216,15 +225,18 @@ var temporal = {
       this.paper.fillStyle = "#000";
       this.paper.fillText(name, eonX+4, texttop);    
 
-      console.log(name, eonX+4, texttop);
+      console.log(name, "bar X", eonX, "bar width", barlength, 'overallwidth', this.size.w);
 
-      eonX += barlength;
+      //eonX += barlength;
       drawtimebase += reallength;
     }
   },
   drawExistanceBar:function(name, color, start, finish, topOffset, height, scale){
     //var creature = [];
-    var creatureX = this.timebase['x'] + (start * scale);
+    //var creatureX = this.timebase['x'] + (start * scale);
+    var creatureX = ((this.size.w) - this.margins - (finish * scale));
+    
+    
     //var drawtimebase = 0;
     var reallength = finish - start;
     var barlength = reallength * scale;
@@ -232,7 +244,7 @@ var temporal = {
     var textcenter = creatureX + (barlength / 2);
     var texttop = this.timebase['y'] + topOffset + height + 18;
     var textname = name;
-    var textage = start+' to '+finish+ ' Mya';
+    var textage = finish+' to '+start+ ' Mya';
 
     reallength.toFixed(2);
     barlength.toFixed(2);
