@@ -101,6 +101,7 @@ var temporal = {
   paper:null,
   timebase:[],
   canvas:null,
+  cropped:null,
   scale:2,
   margins:40,
   size:{
@@ -110,6 +111,7 @@ var temporal = {
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
+    //this.cropped = document.getElementById("cropped");
     this.timebase['x'] = 40;
     this.timebase['y'] = 0;
     //pixels per MY
@@ -262,6 +264,9 @@ var temporal = {
     this.paper.fillText(textage, textcenter, texttop +20);
 
     console.log(name, barlength, creatureX, start);
+  },
+  createCropped:function(){
+    //this.cropped.drawImage(img,x,y,width,height);
   },
   download:function(paper, filename) {
     /// create an "off-screen" anchor tag

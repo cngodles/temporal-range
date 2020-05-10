@@ -24,11 +24,12 @@ body {
   margin: 0 auto;
   */
 }
+/*
 canvas { 
   width:100%;
   height: 100%;
 }
-
+*/
 #formframe {
   width:100%;
   max-width: 800px;
