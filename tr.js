@@ -25,57 +25,58 @@ var geologictimeeons = [
 ];
 
 var geologicepochs = [
-  ['Holocene', 'rgb(254,241,224)', 0, 0.0117],
-  ['Pleistocene', 'rgb(254,239,184)', 0.0117, 2.58],
+  ['Holocene', 'rgb(254,241,224)', 0, 0.0117, ''],
+  ['Pleistocene', 'rgb(254,239,184)', 0.0117, 2.58, ''],
 
-  ['Pliocene', 'rgb(254,248,166)', 2.58, 5.333],
-  ['Miocene', 'rgb(254,239,0)', 5.333, 23.03],
+  ['Pliocene', 'rgb(254,248,166)', 2.58, 5.333, ''],
+  ['Miocene', 'rgb(254,239,0)', 5.333, 23.03, ''],
 
-  ['Oligocene', 'rgb(254,195,134)', 23.03, 33.9],
-  ['Eocene', 'rgb(254,185,121)', 33.9, 56],
-  ['Paleocene', 'rgb(254,173,110)', 56, 66],
+  ['Oligocene', 'rgb(254,195,134)', 23.03, 33.9, ''],
+  ['Eocene', 'rgb(254,185,121)', 33.9, 56, ''],
+  ['Paleocene', 'rgb(254,173,110)', 56, 66, ''],
 
-  ['Late', 'rgb(166,212,104)', 66, 100.5],
-  ['Early', 'rgb(126,205,116)', 100.5, 145],
+  ['Late', 'rgb(166,212,104)', 66, 100.5, ''],
+  ['Early', 'rgb(126,205,116)', 100.5, 145, ''],
 
-  ['Late', 'rgb(151,227,250)', 145, 163.5],
-  ['Middle', 'rgb(52,209,235)', 163.5, 174.1],
-  ['Early', 'rgb(0,183,234)', 174.1, 201.3],
+  ['Late', 'rgb(151,227,250)', 145, 163.5, ''],
+  ['Middle', 'rgb(52,209,235)', 163.5, 174.1, ''],
+  ['Early', 'rgb(0,183,234)', 174.1, 201.3, ''],
 
-  ['Late', 'rgb(198,152,194)', 201.3, 237],
-  ['Middle', 'rgb(191,124,177)', 237, 247.2],
-  ['Early', 'rgb(173,87,154)', 247.2, 251.902],
+  ['Late', 'rgb(198,152,194)', 201.3, 237, ''],
+  ['Middle', 'rgb(191,124,177)', 237, 247.2, ''],
+  ['Early', 'rgb(173,87,154)', 247.2, 251.902, ''],
 
-  ['Lopingian', 'rgb(254,175,151)', 251.902, 259.1],
-  ['Guadalupian', 'rgb(254,131,103)', 259.1, 272.95],
-  ['Cisuralian', 'rgb(247,110,84)', 272.95, 298.9],
+  ['Lopingian', 'rgb(254,175,151)', 251.902, 259.1, ''],
+  ['Guadalupian', 'rgb(254,131,103)', 259.1, 272.95, ''],
+  ['Cisuralian', 'rgb(247,110,84)', 272.95, 298.9, ''],
 
-  ['Pennsylvania', 'rgb(138,198,195)', 298.9, 332.2],
-  ['Mississippian', 'rgb(97,157,126)', 332.2, 358.9],
+  ['Pennsylvania', 'rgb(138,198,195)', 298.9, 332.2, ''],
+  ['Mississippian', 'rgb(97,157,126)', 332.2, 358.9, ''],
 
-  ['Late', 'rgb(244,224,169)', 358.9, 382.7],
-  ['Middle', 'rgb(246,200,122)', 382.7, 393.3],
-  ['Early', 'rgb(239,176,99)', 393.3, 419.2],
+  ['Late', 'rgb(244,224,169)', 358.9, 382.7, ''],
+  ['Middle', 'rgb(246,200,122)', 382.7, 393.3, ''],
+  ['Early', 'rgb(239,176,99)', 393.3, 419.2, ''],
 
-  ['Pridoli', 'rgb(228,242,230)', 419.2, 423],
-  ['Ludlow', 'rgb(180,229,219)', 423, 427.4],
-  ['Wenlock', 'rgb(164,224,208)', 427.4, 433.4],
-  ['Llandovery ', 'rgb(126,215,198)', 433.4, 443.8],
+  ['Pridoli', 'rgb(228,242,230)', 419.2, 423, ''],
+  ['Ludlow', 'rgb(180,229,219)', 423, 427.4, ''],
+  ['Wenlock', 'rgb(164,224,208)', 427.4, 433.4, ''],
+  ['Llandovery ', 'rgb(126,215,198)', 433.4, 443.8, ''],
 
-  ['Late', 'rgb(94,204,169)', 443.8, 458.4],
-  ['Middle', 'rgb(0,189,151)', 458.4, 470],
-  ['Early', 'rgb(0,175,137)', 470, 485.4],
+  ['Late', 'rgb(94,204,169)', 443.8, 458.4, ''],
+  ['Middle', 'rgb(0,189,151)', 458.4, 470, ''],
+  ['Early', 'rgb(0,175,137)', 470, 485.4, ''],
 
-  ['Furongian', 'rgb(173,221,168)', 485.4, 497],
-  ['Miaolingian', 'rgb(161,207,155)', 497, 509],
-  ['Series 2', 'rgb(149,194,143)', 509, 521],
-  ['Terreneuvian', 'rgb(138,181,132)', 521, 541]
+  ['Furongian', 'rgb(173,221,168)', 485.4, 497, ''],
+  ['Miaolingian', 'rgb(161,207,155)', 497, 509, ''],
+  ['Series 2', 'rgb(149,194,143)', 509, 521, ''],
+  ['Terreneuvian', 'rgb(138,181,132)', 521, 541, '']
 ];
 
 var geologictimeeons2 = [
   ['Cenozoic', 'rgb(246,236,57)', 0, 66, 'Ceno.'],
   ['Mesozoic', 'rgb(7,202,234)', 66, 251.9, 'Meso.'],
-  ['Paleozoic', 'rgb(146,195,160)', 251.9, 541, 'Paleo']
+  ['Paleozoic', 'rgb(146,195,160)', 251.9, 541, 'Paleo.'],
+  ['Neoproterozoic', 'rgb(254,183,87)', 541, 1000, 'Neoproto.']
 ];
 
 var geologictimeperiods = [
@@ -90,7 +91,10 @@ var geologictimeperiods = [
   ['Devonian','rgb(221,150,81)', 358.9, 419.2, 'D'],
   ['Silurian','rgb(166,223,197)', 419.2, 443.8, 'S'],
   ['Ordovician','rgb(0,169,138)', 443.8, 485.4, 'O'],
-  ['Cambrian','rgb(129,170,114)', 485.4, 541, 'Є']
+  ['Cambrian','rgb(129,170,114)', 485.4, 541, 'Є'],
+  ['Ediacaran','rgb(254,214,123)', 541, 635, 'Ed'],
+  ['Cryogenian','rgb(254,204,111)', 635, 720, 'Cr'],
+  ['Tonian','rgb(254,194,98)', 720, 1000, 'Ton.']
 ];
 
 var temporal = {
@@ -98,6 +102,10 @@ var temporal = {
   timebase:[],
   canvas:null,
   scale:2,
+  size:{
+    'w':1162,
+    'h':160
+  },
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
@@ -109,16 +117,16 @@ var temporal = {
     //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
     
     
-    var size = [];
-    size['w'] = 1162;
-    size['h'] = 160;
-    this.canvas.style.width = size['w'] + "px";
-    this.canvas.style.height = size['h'] + "px";
+    //var size = [];
+    this.size['w'] = (1000 * this.scale) + 80;
+    //size['h'] = 160;
+    this.canvas.style.width = this.size['w'] + "px";
+    this.canvas.style.height = this.size['h'] + "px";
 
     // Set actual size in memory (scaled to account for extra pixel density).
     var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    this.canvas.width = Math.floor(size['w'] * devicescale);
-    this.canvas.height = Math.floor(size['h'] * devicescale);
+    this.canvas.width = Math.floor(this.size['w'] * devicescale);
+    this.canvas.height = Math.floor(this.size['h'] * devicescale);
     
     this.paper = this.canvas.getContext('2d');
     this.paper.scale(devicescale, devicescale);
@@ -136,7 +144,7 @@ var temporal = {
     //Draw sample timeline.
     this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
     this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-    this.drawTimeline(geologicepochs, 70, 25, this.scale);
+    //this.drawTimeline(geologicepochs, 70, 25, this.scale);
     
     this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
   },
@@ -147,7 +155,28 @@ var temporal = {
     var creaturename = $("#creature-name").val();
     var range1 = parseFloat($("#range-1").val());
     var range2 = parseFloat($("#range-2").val());
-    if(range1 <= 541 && range2 <= 541 && range1 >= 0 && range2 > 0 && range1 < range2){
+    var scale = parseFloat($("#chart-scale").val());
+    this.scale = scale;
+    if(range1 <= 1000 && range2 <= 1000 && range1 >= 0 && range2 > 0 && range1 < range2){
+      
+      
+      
+      //var size = [];
+      this.size['w'] = (1000 * this.scale) + 80;
+      this.size['h'] = 200;
+      this.canvas.style.width = this.size['w'] + "px";
+      this.canvas.style.height = this.size['h'] + "px";
+
+      // Set actual size in memory (scaled to account for extra pixel density).
+      var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+      this.canvas.width = Math.floor(this.size['w'] * devicescale);
+      this.canvas.height = Math.floor(this.size['h'] * devicescale);
+
+      this.paper = this.canvas.getContext('2d');
+      this.paper.scale(devicescale, devicescale);
+      
+      
+      
       this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
       this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
       this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 65, 10, this.scale);
