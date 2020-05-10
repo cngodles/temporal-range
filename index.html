@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Temporal Range ChartGenerator</title>
+<title>Temporal Range Chart Generator</title>
   <link type="text/css" rel="stylesheet" href="tr.css">
 </head>
 
@@ -29,9 +29,24 @@
       </div>
       <div class="formpad">
         <label for="range-1">Range:</label>
-        <input type="text" name="range-1" id="range-1" class="input-small"> to 
-        <input type="text" name="range-2" id="range-2" class="input-small">
-        <p class="notes">Must be a number from 0 to 541.</p>
+        <input type="number" step="0.01" min="0" max="1000" name="range-2" id="range-2" class="input-small"> until 
+        <input type="number" step="0.01" min="0" max="1000" name="range-1" id="range-1" class="input-small">
+        <p class="notes">Must be a number from 0 to 1000.</p>
+      </div>
+      <div class="formpad">
+        <label for="chart-scale">Pixels per million years:</label>
+        <select name="chart-scale" id="chart-scale">
+          <option value="1">1</option>
+          <option value="2" selected="selected">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
       </div>
       <div class="formpad">
         <input type="submit" value="Generate Temporal Range Chart" class="btn">
@@ -41,14 +56,13 @@
   </div>
   <div id="canvasscroll">
     <div id="canvasbox">
-      <canvas id="timeline" width="1162" height="160"></canvas>
+      <canvas id="timeline"></canvas>
     </div>
   </div>
   <div class="download-area">
     <button id="btndownload" class="btn">Download as PNG</button>
   </div>
-  <p>Version 1.1<br>
-  Epoch not currently available in output.
+  <p>Version 1.2
   </p>
   <script src="jquery-3.5.1.min.js"></script>
   <script src="tr.js"></script>
