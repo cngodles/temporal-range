@@ -108,6 +108,7 @@ var temporal = {
     'w':1162,
     'h':160
   },
+  direction:'vert',
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
@@ -123,13 +124,28 @@ var temporal = {
     //var size = [];
     this.size['w'] = (1000 * this.scale) + 80;
     //size['h'] = 160;
-    this.canvas.style.width = this.size['w'] + "px";
-    this.canvas.style.height = this.size['h'] + "px";
+    var devicescale
+    switch(this.direction){
+      case 'horz':
+        this.canvas.style.width = this.size['w'] + "px";
+        this.canvas.style.height = this.size['h'] + "px";
 
-    // Set actual size in memory (scaled to account for extra pixel density).
-    var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    this.canvas.width = Math.floor(this.size['w'] * devicescale);
-    this.canvas.height = Math.floor(this.size['h'] * devicescale);
+        // Set actual size in memory (scaled to account for extra pixel density).
+        devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+        this.canvas.width = Math.floor(this.size['w'] * devicescale);
+        this.canvas.height = Math.floor(this.size['h'] * devicescale);
+        break;
+      case 'vert':
+        //Reverse W/H for vertical display.
+        this.canvas.style.width = this.size['h'] + "px";
+        this.canvas.style.height = this.size['w'] + "px";
+
+        // Set actual size in memory (scaled to account for extra pixel density).
+        devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+        this.canvas.width = Math.floor(this.size['h'] * devicescale);
+        this.canvas.height = Math.floor(this.size['w'] * devicescale);
+        break;
+    }
     
     this.paper = this.canvas.getContext('2d');
     this.paper.scale(devicescale, devicescale);
@@ -203,7 +219,7 @@ var temporal = {
       //['Cenozoic', 'rgb(246,236,57)', 0, 66, 'Ceno.']
       var reallength = data[i][3] - data[i][2];
       var barlength = reallength * scale;
-      eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+      
       
       reallength.toFixed(2);
       barlength.toFixed(2);
@@ -216,7 +232,18 @@ var temporal = {
       var texttop = this.timebase['y'] + topOffset + 12;
 
       this.paper.beginPath();
-      this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+      
+      switch(this.direction){
+        case 'horz':
+          eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+          this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+          break;
+        case 'vert':
+          eonX = (0 + this.margins + (data[i][2] * scale));
+          this.paper.rect(this.timebase['y'] + topOffset, eonX, height, barlength);
+          break;
+      }
+      
       //console.log(eonX, this.timebase['y'] + topOffset, barlength, height);
       this.paper.fillStyle = data[i][1];
       this.paper.lineWidth = 1;
