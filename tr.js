@@ -102,7 +102,7 @@ var temporal = {
   timebase:[],
   canvas:null,
   cropped:null,
-  scale:2,
+  scale:3,
   margins:40,
   size:{
     'w':1162,
@@ -116,7 +116,7 @@ var temporal = {
     this.timebase['x'] = 40;
     this.timebase['y'] = 0;
     //pixels per MY
-    this.scale = 2;
+    this.scale = 5;
     this.timebase['max'] = 541;
     //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
     
@@ -136,6 +136,8 @@ var temporal = {
         this.canvas.height = Math.floor(this.size['h'] * devicescale);
         break;
       case 'vert':
+        //Needs to be wider
+        this.size['h'] = 400;
         //Reverse W/H for vertical display.
         this.canvas.style.width = this.size['h'] + "px";
         this.canvas.style.height = this.size['w'] + "px";
@@ -157,9 +159,9 @@ var temporal = {
     geologictimeperiods.reverse();
     geologicepochs.reverse();
     
-    this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
-    this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-    this.drawTimeline(geologicepochs, 70, 25, this.scale);
+    this.drawTimeline(geologictimeeons2, 20, 30, this.scale);
+    this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
+    this.drawTimeline(geologicepochs, 170, 120, this.scale);
     
     this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
   },
@@ -179,9 +181,7 @@ var temporal = {
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
     if(range1 <= 1000 && range2 <= 1000 && range1 >= 0 && range2 > 0 && range1 < range2){
-      
-      
-      
+
       //var size = [];
       
       this.size['w'] = (1000 * this.scale) + 80;
@@ -250,12 +250,33 @@ var temporal = {
       this.paper.strokeStyle = 'black';
       this.paper.fill();
       this.paper.stroke();
-      this.paper.textAlign = "left";
+      
+      this.paper.save();
+      
       this.paper.font = "400 12px sans-serif";
       this.paper.fillStyle = "#000";
-      this.paper.fillText(name, eonX+4, texttop);    
-
-      console.log(name, "bar X", eonX, "bar width", barlength, 'overallwidth', this.size.w);
+      
+ 
+      switch(this.direction){
+        case 'horz':
+          this.paper.textAlign = "left";
+          this.paper.fillText(name, eonX+4, texttop); 
+          break;
+        case 'vert':
+          if(height < 50){
+            this.paper.rotate(-Math.PI/2);
+            this.paper.textAlign = "right";
+            //this.paper.fillText(name, texttop, eonX+4); 
+            this.paper.fillText(name, (eonX+4)*-1, texttop); 
+          } else {
+            this.paper.textAlign = "left"; 
+            this.paper.fillText(name, texttop - 4, eonX+14); 
+          }
+          break;
+      }
+      //this.paper.fillText(name, eonX+4, texttop);    
+      this.paper.restore();
+      console.log(name, "bar X", eonX, "texttop", texttop, data[i]);
 
       //eonX += barlength;
       drawtimebase += reallength;
