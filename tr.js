@@ -124,7 +124,7 @@ var temporal = {
     //var size = [];
     this.size['w'] = (1000 * this.scale) + 80;
     //size['h'] = 160;
-    var devicescale
+    var devicescale;
     switch(this.direction){
       case 'horz':
         this.canvas.style.width = this.size['w'] + "px";
@@ -173,37 +173,64 @@ var temporal = {
   },
   tryTimeline:function(){
     this.paper.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //Get form values
+    //Get form val es
     var rangetype = $("#range-type").val();
+    var chartDirection = $("#chart-direction").val();
     var creaturename = $("#creature-name").val();
     var range1 = parseFloat($("#range-1").val());
     var range2 = parseFloat($("#range-2").val());
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
+    this.size['w'] = (1000 * this.scale) + 80;
+    this.size['h'] = 200;
+    
+    // Set actual size in memory (scaled to account for extra pixel density).
+    var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    
     if(range1 <= 1000 && range2 <= 1000 && range1 >= 0 && range2 > 0 && range1 < range2){
-
-      //var size = [];
+      this.direction = chartDirection;
       
-      this.size['w'] = (1000 * this.scale) + 80;
-      this.size['h'] = 200;
-      this.canvas.style.width = this.size['w'] + "px";
-      this.canvas.style.height = this.size['h'] + "px";
+      switch(this.direction){
+        case 'horz':
+          this.canvas.style.width = this.size['w'] + "px";
+          this.canvas.style.height = this.size['h'] + "px";
 
-      // Set actual size in memory (scaled to account for extra pixel density).
-      var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-      this.canvas.width = Math.floor(this.size['w'] * devicescale);
-      this.canvas.height = Math.floor(this.size['h'] * devicescale);
+          this.canvas.width = Math.floor(this.size['w'] * devicescale);
+          this.canvas.height = Math.floor(this.size['h'] * devicescale);
+          break;
+        case 'vert':
+          //Needs to be wider
+          this.size['h'] = 400;
+          //Reverse W/H for vertical display.
+          this.canvas.style.width = this.size['h'] + "px";
+          this.canvas.style.height = this.size['w'] + "px";
 
+          this.canvas.width = Math.floor(this.size['h'] * devicescale);
+          this.canvas.height = Math.floor(this.size['w'] * devicescale);
+          break;
+      }
+      
       this.paper = this.canvas.getContext('2d');
       this.paper.scale(devicescale, devicescale);
-      
-      
+
       //Make a true white background.
       this.makeBackground('#fff');
-      this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
-      this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-      this.drawTimeline(geologicepochs, 70, 25, this.scale);
-      this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 90, 10, this.scale);
+      switch(this.direction){
+        case 'horz':
+          this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
+          this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
+          this.drawTimeline(geologicepochs, 70, 25, this.scale);
+          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 90, 10, this.scale);
+          break;
+        case 'vert':
+          this.drawTimeline(geologictimeeons2, 20, 30, this.scale);
+          this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
+          this.drawTimeline(geologicepochs, 170, 120, this.scale);
+          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 280, 10, this.scale);
+          break;
+      }
+      
+      
     } else {
       alert("Must fall within range!");
       return false;
