@@ -163,7 +163,7 @@ var temporal = {
     this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
     this.drawTimeline(geologicepochs, 170, 120, this.scale);
     
-    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
+    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 285, 10, this.scale);
   },
   makeBackground:function(color){
     this.paper.beginPath();
@@ -226,7 +226,7 @@ var temporal = {
           this.drawTimeline(geologictimeeons2, 20, 30, this.scale);
           this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
           this.drawTimeline(geologicepochs, 170, 120, this.scale);
-          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 280, 10, this.scale);
+          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 285, 10, this.scale);
           break;
       }
       
@@ -310,9 +310,21 @@ var temporal = {
     }
   },
   drawExistanceBar:function(name, color, start, finish, topOffset, height, scale){
-    //var creature = [];
-    //var creatureX = this.timebase['x'] + (start * scale);
+    
     var creatureX = ((this.size.w) - this.margins - (finish * scale));
+    
+    
+    switch(this.direction){
+      case 'horz':
+        creatureX = ((this.size.w) - this.margins - (finish * scale));
+        //eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+        break;
+      case 'vert':
+        //creatureX = ((this.size.w) - this.margins - (finish * scale));
+        creatureX = (0 + this.margins + (start * scale));
+        //eonX = (0 + this.margins + (data[i][2] * scale));
+        break;
+    }
     
     
     //var drawtimebase = 0;
@@ -328,7 +340,17 @@ var temporal = {
     barlength.toFixed(2);
 
     this.paper.beginPath();
-    this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
+    
+    switch(this.direction){
+      case 'horz':
+        this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
+        break;
+      case 'vert':
+        this.paper.rect(this.timebase['y'] + topOffset, creatureX, height, barlength);
+        break;
+    }
+    
+    //this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
     this.paper.fillStyle = color;
     this.paper.fill();
 
