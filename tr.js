@@ -101,19 +101,22 @@ var temporal = {
   paper:null,
   timebase:[],
   canvas:null,
-  scale:2,
+  cropped:null,
+  scale:3,
   margins:40,
   size:{
     'w':1162,
     'h':160
   },
+  direction:'vert',
   init:function(){
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
+    //this.cropped = document.getElementById("cropped");
     this.timebase['x'] = 40;
     this.timebase['y'] = 0;
     //pixels per MY
-    this.scale = 2;
+    this.scale = 5;
     this.timebase['max'] = 541;
     //var svgwidth = (timebase['max'] * timebase['scale']) + (timebase['x'] * 2);
     
@@ -121,13 +124,30 @@ var temporal = {
     //var size = [];
     this.size['w'] = (1000 * this.scale) + 80;
     //size['h'] = 160;
-    this.canvas.style.width = this.size['w'] + "px";
-    this.canvas.style.height = this.size['h'] + "px";
+    var devicescale;
+    switch(this.direction){
+      case 'horz':
+        this.canvas.style.width = this.size['w'] + "px";
+        this.canvas.style.height = this.size['h'] + "px";
 
-    // Set actual size in memory (scaled to account for extra pixel density).
-    var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    this.canvas.width = Math.floor(this.size['w'] * devicescale);
-    this.canvas.height = Math.floor(this.size['h'] * devicescale);
+        // Set actual size in memory (scaled to account for extra pixel density).
+        devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+        this.canvas.width = Math.floor(this.size['w'] * devicescale);
+        this.canvas.height = Math.floor(this.size['h'] * devicescale);
+        break;
+      case 'vert':
+        //Needs to be wider
+        this.size['h'] = 400;
+        //Reverse W/H for vertical display.
+        this.canvas.style.width = this.size['h'] + "px";
+        this.canvas.style.height = this.size['w'] + "px";
+
+        // Set actual size in memory (scaled to account for extra pixel density).
+        devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+        this.canvas.width = Math.floor(this.size['h'] * devicescale);
+        this.canvas.height = Math.floor(this.size['w'] * devicescale);
+        break;
+    }
     
     this.paper = this.canvas.getContext('2d');
     this.paper.scale(devicescale, devicescale);
@@ -139,11 +159,11 @@ var temporal = {
     geologictimeperiods.reverse();
     geologicepochs.reverse();
     
-    this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
-    this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-    this.drawTimeline(geologicepochs, 70, 25, this.scale);
+    this.drawTimeline(geologictimeeons2, 20, 30, this.scale);
+    this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
+    this.drawTimeline(geologicepochs, 170, 120, this.scale);
     
-    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 90, 10, this.scale);
+    this.drawExistanceBar('Petalodus', 'rgb(60, 60, 60)', 268, 318.1, 285, 10, this.scale);
   },
   makeBackground:function(color){
     this.paper.beginPath();
@@ -153,39 +173,64 @@ var temporal = {
   },
   tryTimeline:function(){
     this.paper.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //Get form values
+    //Get form val es
     var rangetype = $("#range-type").val();
+    var chartDirection = $("#chart-direction").val();
     var creaturename = $("#creature-name").val();
     var range1 = parseFloat($("#range-1").val());
     var range2 = parseFloat($("#range-2").val());
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
+    this.size['w'] = (1000 * this.scale) + 80;
+    this.size['h'] = 200;
+    
+    // Set actual size in memory (scaled to account for extra pixel density).
+    var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    
     if(range1 <= 1000 && range2 <= 1000 && range1 >= 0 && range2 > 0 && range1 < range2){
+      this.direction = chartDirection;
       
-      
-      
-      //var size = [];
-      
-      this.size['w'] = (1000 * this.scale) + 80;
-      this.size['h'] = 200;
-      this.canvas.style.width = this.size['w'] + "px";
-      this.canvas.style.height = this.size['h'] + "px";
+      switch(this.direction){
+        case 'horz':
+          this.canvas.style.width = this.size['w'] + "px";
+          this.canvas.style.height = this.size['h'] + "px";
 
-      // Set actual size in memory (scaled to account for extra pixel density).
-      var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-      this.canvas.width = Math.floor(this.size['w'] * devicescale);
-      this.canvas.height = Math.floor(this.size['h'] * devicescale);
+          this.canvas.width = Math.floor(this.size['w'] * devicescale);
+          this.canvas.height = Math.floor(this.size['h'] * devicescale);
+          break;
+        case 'vert':
+          //Needs to be wider
+          this.size['h'] = 400;
+          //Reverse W/H for vertical display.
+          this.canvas.style.width = this.size['h'] + "px";
+          this.canvas.style.height = this.size['w'] + "px";
 
+          this.canvas.width = Math.floor(this.size['h'] * devicescale);
+          this.canvas.height = Math.floor(this.size['w'] * devicescale);
+          break;
+      }
+      
       this.paper = this.canvas.getContext('2d');
       this.paper.scale(devicescale, devicescale);
-      
-      
+
       //Make a true white background.
       this.makeBackground('#fff');
-      this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
-      this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
-      this.drawTimeline(geologicepochs, 70, 25, this.scale);
-      this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 90, 10, this.scale);
+      switch(this.direction){
+        case 'horz':
+          this.drawTimeline(geologictimeeons2, 20, 25, this.scale);
+          this.drawTimeline(geologictimeperiods, 45, 25, this.scale);
+          this.drawTimeline(geologicepochs, 70, 25, this.scale);
+          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 90, 10, this.scale);
+          break;
+        case 'vert':
+          this.drawTimeline(geologictimeeons2, 20, 30, this.scale);
+          this.drawTimeline(geologictimeperiods, 50, 120, this.scale);
+          this.drawTimeline(geologicepochs, 170, 120, this.scale);
+          this.drawExistanceBar(creaturename, 'rgb(60, 60, 60)', range1, range2, 285, 10, this.scale);
+          break;
+      }
+      
+      
     } else {
       alert("Must fall within range!");
       return false;
@@ -201,7 +246,7 @@ var temporal = {
       //['Cenozoic', 'rgb(246,236,57)', 0, 66, 'Ceno.']
       var reallength = data[i][3] - data[i][2];
       var barlength = reallength * scale;
-      eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+      
       
       reallength.toFixed(2);
       barlength.toFixed(2);
@@ -214,28 +259,72 @@ var temporal = {
       var texttop = this.timebase['y'] + topOffset + 12;
 
       this.paper.beginPath();
-      this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+      
+      switch(this.direction){
+        case 'horz':
+          eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+          this.paper.rect(eonX, this.timebase['y'] + topOffset, barlength, height);
+          break;
+        case 'vert':
+          eonX = (0 + this.margins + (data[i][2] * scale));
+          this.paper.rect(this.timebase['y'] + topOffset, eonX, height, barlength);
+          break;
+      }
+      
       //console.log(eonX, this.timebase['y'] + topOffset, barlength, height);
       this.paper.fillStyle = data[i][1];
       this.paper.lineWidth = 1;
       this.paper.strokeStyle = 'black';
       this.paper.fill();
       this.paper.stroke();
-      this.paper.textAlign = "left";
+      
+      this.paper.save();
+      
       this.paper.font = "400 12px sans-serif";
       this.paper.fillStyle = "#000";
-      this.paper.fillText(name, eonX+4, texttop);    
-
-      console.log(name, "bar X", eonX, "bar width", barlength, 'overallwidth', this.size.w);
+      
+ 
+      switch(this.direction){
+        case 'horz':
+          this.paper.textAlign = "left";
+          this.paper.fillText(name, eonX+4, texttop); 
+          break;
+        case 'vert':
+          if(height < 50){
+            this.paper.rotate(-Math.PI/2);
+            this.paper.textAlign = "right";
+            //this.paper.fillText(name, texttop, eonX+4); 
+            this.paper.fillText(name, (eonX+4)*-1, texttop); 
+          } else {
+            this.paper.textAlign = "left"; 
+            this.paper.fillText(name, texttop - 4, eonX+14); 
+          }
+          break;
+      }
+      //this.paper.fillText(name, eonX+4, texttop);    
+      this.paper.restore();
+      console.log(name, "bar X", eonX, "texttop", texttop, data[i]);
 
       //eonX += barlength;
       drawtimebase += reallength;
     }
   },
   drawExistanceBar:function(name, color, start, finish, topOffset, height, scale){
-    //var creature = [];
-    //var creatureX = this.timebase['x'] + (start * scale);
+    
     var creatureX = ((this.size.w) - this.margins - (finish * scale));
+    
+    
+    switch(this.direction){
+      case 'horz':
+        creatureX = ((this.size.w) - this.margins - (finish * scale));
+        //eonX = ((this.size.w) - this.margins - (data[i][3] * scale));
+        break;
+      case 'vert':
+        //creatureX = ((this.size.w) - this.margins - (finish * scale));
+        creatureX = (0 + this.margins + (start * scale));
+        //eonX = (0 + this.margins + (data[i][2] * scale));
+        break;
+    }
     
     
     //var drawtimebase = 0;
@@ -251,17 +340,47 @@ var temporal = {
     barlength.toFixed(2);
 
     this.paper.beginPath();
-    this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
+    
+    switch(this.direction){
+      case 'horz':
+        this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
+        break;
+      case 'vert':
+        this.paper.rect(this.timebase['y'] + topOffset, creatureX, height, barlength);
+        break;
+    }
+    
+    //this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
     this.paper.fillStyle = color;
     this.paper.fill();
-
+		
+		this.paper.save();
     this.paper.textAlign = "center";
-    this.paper.font = "700 20px sans-serif";
-    this.paper.fillText(textname, textcenter, texttop);
-    this.paper.font = "700 15px sans-serif";
-    this.paper.fillText(textage, textcenter, texttop +20);
+		
+		switch(this.direction){
+      case 'horz':
+        this.paper.font = "700 20px sans-serif";
+    		this.paper.fillText(textname, textcenter, texttop);
+    		this.paper.font = "700 15px sans-serif";
+    		this.paper.fillText(textage, textcenter, texttop +20);
+        break;
+      case 'vert':
+				this.paper.rotate(-Math.PI/2);
+        this.paper.font = "700 20px sans-serif";
+				//(eonX+4)*-1, texttop
+    		this.paper.fillText(textname, -1*textcenter, texttop);
+    		this.paper.font = "700 15px sans-serif";
+    		this.paper.fillText(textage, -1*textcenter, texttop +20);
+				this.paper.restore();
+        break;
+    }
+		
+    console.log(textname, texttop, textcenter);
 
-    console.log(name, barlength, creatureX, start);
+    //console.log(name, barlength, creatureX, start);
+  },
+  createCropped:function(){
+    //this.cropped.drawImage(img,x,y,width,height);
   },
   download:function(paper, filename) {
     /// create an "off-screen" anchor tag
