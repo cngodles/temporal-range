@@ -353,14 +353,31 @@ var temporal = {
     //this.paper.rect(creatureX, this.timebase['y'] + topOffset, barlength, height);
     this.paper.fillStyle = color;
     this.paper.fill();
-
+		
+		this.paper.save();
     this.paper.textAlign = "center";
-    this.paper.font = "700 20px sans-serif";
-    this.paper.fillText(textname, textcenter, texttop);
-    this.paper.font = "700 15px sans-serif";
-    this.paper.fillText(textage, textcenter, texttop +20);
+		
+		switch(this.direction){
+      case 'horz':
+        this.paper.font = "700 20px sans-serif";
+    		this.paper.fillText(textname, textcenter, texttop);
+    		this.paper.font = "700 15px sans-serif";
+    		this.paper.fillText(textage, textcenter, texttop +20);
+        break;
+      case 'vert':
+				this.paper.rotate(-Math.PI/2);
+        this.paper.font = "700 20px sans-serif";
+				//(eonX+4)*-1, texttop
+    		this.paper.fillText(textname, -1*textcenter, texttop);
+    		this.paper.font = "700 15px sans-serif";
+    		this.paper.fillText(textage, -1*textcenter, texttop +20);
+				this.paper.restore();
+        break;
+    }
+		
+    console.log(textname, texttop, textcenter);
 
-    console.log(name, barlength, creatureX, start);
+    //console.log(name, barlength, creatureX, start);
   },
   createCropped:function(){
     //this.cropped.drawImage(img,x,y,width,height);
