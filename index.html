@@ -27,12 +27,56 @@
         <label for="creature-name">Creature Name:</label>
         <input type="text" name="creature-name" id="creature-name" class="input-large" value="Test">
       </div>
-      <div class="formpad">
+      
+      <div>
+        <ul class="tabs">
+          <li><a href="#range" data-tab-target="range" class="on">Range</a></li>
+          <li><a href="#single" data-tab-target="single">Single Point</a></li>
+          <li><a href="#ranges" data-tab-target="ranges" class="on">Multiple Ranges</a></li>
+        </ul>
+      </div>
+      <input type="hidden" id="creature-type" name="creature-type" value="range">
+      <div class="formpad" data-tab="range">
         <label for="range-1">Range:</label>
         <input type="number" step="0.01" min="0" max="1000" name="range-2" id="range-2" class="input-small" value="500"> until 
         <input type="number" step="0.01" min="0" max="1000" name="range-1" id="range-1" class="input-small" value="66">
         <p class="notes">Must be a number from 0 to 1000.</p>
       </div>
+      <div class="formpad" data-tab="single" style="display: none;">
+        <label for="range-3">Point:</label>
+        <input type="number" step="0.01" min="0" max="1000" name="range-3" id="range-3" class="input-small" value="500">
+        <p class="notes">Must be a number from 0 to 1000.</p>
+      </div>
+      <div class="formpad" data-tab="ranges" style="display: none;">
+        <label for="range-1b">Range:</label>
+        <input type="number" step="0.01" min="0" max="1000" name="range-2b" id="range-2b" class="input-small" value="500"> until 
+        <input type="number" step="0.01" min="0" max="1000" name="range-1b" id="range-1b" class="input-small" value="66">
+        <p class="notes">Must be a number from 0 to 1000.</p>
+        <div><button id="add-to-range">Add to Ranges</button></div>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Start</th>
+                <th>End</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-cid="1">
+                <td>Test 1</td>
+                <td>320</td>
+                <td>300</td>
+                <td>
+                  <a href="#delete">[X]</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
       <div class="formpad">
         <label for="chart-scale">Pixels per million years:</label>
         <select name="chart-scale" id="chart-scale">

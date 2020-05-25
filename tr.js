@@ -9,6 +9,14 @@ $(document)
 .on("click", "#btndownload", function(){
   temporal.download(temporal.timelinediv, 'myimage.png');
 })
+.on("click", "a[data-tab-target]", function(e){
+  e.preventDefault();
+  $("a[data-tab-target]").removeClass("on");
+  $(this).addClass("on");
+  $("div[data-tab]").hide();
+  $("div[data-tab="+$(this).data("tab-target")+"]").show();
+  $("#creature-type").val($(this).data("tab-target"));
+})
 .on("submit", "#set-chart", function(e){
   e.preventDefault();
   temporal.tryTimeline();
@@ -102,6 +110,7 @@ var temporal = {
   timebase:[],
   canvas:null,
   cropped:null,
+  creatures:[],
   scale:3,
   margins:40,
   size:{
@@ -184,8 +193,10 @@ var temporal = {
     var rangetype = $("#range-type").val();
     var chartDirection = $("#chart-direction").val();
     var creaturename = $("#creature-name").val();
+    var rangetype = $("#creature-type").val();
     var range1 = parseFloat($("#range-1").val());
     var range2 = parseFloat($("#range-2").val());
+    var range3 = parseFloat($("#range-3").val());
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
     this.size.w = (1000 * this.scale) + (this.margins * 2);
