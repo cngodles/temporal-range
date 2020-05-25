@@ -50,7 +50,7 @@ var geologicepochs = [
   ['Guadalupian', 'rgb(254,131,103)', 259.1, 272.95, ''],
   ['Cisuralian', 'rgb(247,110,84)', 272.95, 298.9, ''],
 
-  ['Pennsylvania', 'rgb(138,198,195)', 298.9, 332.2, ''],
+  ['Pennsylvanian', 'rgb(138,198,195)', 298.9, 332.2, ''],
   ['Mississippian', 'rgb(97,157,126)', 332.2, 358.9, ''],
 
   ['Late', 'rgb(244,224,169)', 358.9, 382.7, ''],
@@ -122,30 +122,30 @@ var temporal = {
     
     
     //var size = [];
-    this.size['w'] = (1000 * this.scale) + 80;
-    //size['h'] = 160;
+    this.size.w = (1000 * this.scale) + (this.margins * 2);
+    //this.size.h = 160;
     var devicescale;
     switch(this.direction){
       case 'horz':
-        this.canvas.style.width = this.size['w'] + "px";
-        this.canvas.style.height = this.size['h'] + "px";
+        this.canvas.style.width = this.size.w + "px";
+        this.canvas.style.height = this.size.h + "px";
 
         // Set actual size in memory (scaled to account for extra pixel density).
         devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-        this.canvas.width = Math.floor(this.size['w'] * devicescale);
-        this.canvas.height = Math.floor(this.size['h'] * devicescale);
+        this.canvas.width = Math.floor(this.size.w * devicescale);
+        this.canvas.height = Math.floor(this.size.h * devicescale);
         break;
       case 'vert':
         //Needs to be wider
-        this.size['h'] = 400;
+        this.size.h = 400;
         //Reverse W/H for vertical display.
-        this.canvas.style.width = this.size['h'] + "px";
-        this.canvas.style.height = this.size['w'] + "px";
+        this.canvas.style.width = this.size.h + "px";
+        this.canvas.style.height = this.size.w + "px";
 
         // Set actual size in memory (scaled to account for extra pixel density).
         devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-        this.canvas.width = Math.floor(this.size['h'] * devicescale);
-        this.canvas.height = Math.floor(this.size['w'] * devicescale);
+        this.canvas.width = Math.floor(this.size.h * devicescale);
+        this.canvas.height = Math.floor(this.size.w * devicescale);
         break;
     }
     
@@ -167,7 +167,14 @@ var temporal = {
   },
   makeBackground:function(color){
     this.paper.beginPath();
-    this.paper.rect(0, 0, this.size.w, this.size.h);
+    switch(this.direction){
+      case 'horz':
+        this.paper.rect(0, 0, this.size.w, this.size.h);
+        break;
+      case 'vert':
+        this.paper.rect(0, 0, this.size.h, this.size.w);
+        break;
+    }
     this.paper.fillStyle = color;
     this.paper.fill();
   },
@@ -181,8 +188,8 @@ var temporal = {
     var range2 = parseFloat($("#range-2").val());
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
-    this.size['w'] = (1000 * this.scale) + 80;
-    this.size['h'] = 200;
+    this.size.w = (1000 * this.scale) + (this.margins * 2);
+    this.size.h = 200;
     
     // Set actual size in memory (scaled to account for extra pixel density).
     var devicescale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
@@ -192,21 +199,21 @@ var temporal = {
       
       switch(this.direction){
         case 'horz':
-          this.canvas.style.width = this.size['w'] + "px";
-          this.canvas.style.height = this.size['h'] + "px";
+          this.canvas.style.width = this.size.w + "px";
+          this.canvas.style.height = this.size.h + "px";
 
-          this.canvas.width = Math.floor(this.size['w'] * devicescale);
-          this.canvas.height = Math.floor(this.size['h'] * devicescale);
+          this.canvas.width = Math.floor(this.size.w * devicescale);
+          this.canvas.height = Math.floor(this.size.h * devicescale);
           break;
         case 'vert':
           //Needs to be wider
-          this.size['h'] = 400;
+          this.size.h = 400;
           //Reverse W/H for vertical display.
-          this.canvas.style.width = this.size['h'] + "px";
-          this.canvas.style.height = this.size['w'] + "px";
+          this.canvas.style.width = this.size.h + "px";
+          this.canvas.style.height = this.size.w + "px";
 
-          this.canvas.width = Math.floor(this.size['h'] * devicescale);
-          this.canvas.height = Math.floor(this.size['w'] * devicescale);
+          this.canvas.width = Math.floor(this.size.h * devicescale);
+          this.canvas.height = Math.floor(this.size.w * devicescale);
           break;
       }
       
