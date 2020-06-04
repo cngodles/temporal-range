@@ -21,6 +21,16 @@ $(document)
   e.preventDefault();
   temporal.tryTimeline();
 })
+.on("click", ".action--delete-range", function(e){
+  e.preventDefault();
+  var thiskey = $(this).parents("tr").data("cid");
+  temporal.ranges.splice(thiskey, 1);
+  temporal.loadRanges();
+})
+.on("click", ".action--add-new-range", function(e){
+  e.preventDefault();
+  $("#range-newbox").slideToggle();
+})
 ;
 
 var geologictimeeons = [
@@ -105,6 +115,12 @@ var geologictimeperiods = [
   ['Tonian','rgb(254,194,98)', 720, 1000, 'Ton.']
 ];
 
+var sampleranges = [
+  ['Test 1', 320, 300.1],
+  ['Test 2', 220, 200.1],
+  ['Test b', 120, 100.1]
+];
+
 var temporal = {
   paper:null,
   timebase:[],
@@ -119,6 +135,9 @@ var temporal = {
   },
   direction:'vert',
   init:function(){
+    
+    this.ranges = sampleranges;
+    this.loadRanges();
     //Draw demo chart.
     this.canvas = document.getElementById("timeline");
     //this.cropped = document.getElementById("cropped");
@@ -423,6 +442,21 @@ var temporal = {
     } else if (lnk.fireEvent) {
       lnk.fireEvent("onclick");
     }
+  },
+  loadRanges:function(){
+    var generatedcode = [];
+    for(var i = 0; i < this.ranges.length; i++){
+      console.log(this.ranges[i][0]);
+      generatedcode.push('<tr data-cid="'+i+'">'+
+                         '<td>'+this.ranges[i][0]+'</td>'+
+                         '<td>'+this.ranges[i][1]+'</td>'+
+                         '<td>'+this.ranges[i][2]+'</td>'+
+                         '<td><a href="#delete" class="action--delete-range">[X]</a></td>'+
+                         '</tr>');
+      
+      
+    }
+    $("#all-ranges tbody").html(generatedcode.join("\n"));
   }
 }
 

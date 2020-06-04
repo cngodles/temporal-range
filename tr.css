@@ -1,11 +1,16 @@
 body {
-  margin: 10px;
+  margin: 0;
   font-family: sans-serif;
   text-align: center;
 }
 * {
   box-sizing: border-box;
   font-variant-ligatures: none;
+}
+header {
+  background-color: #8ac6c3;
+  color: #202020;
+  padding: 30px 0;
 }
 #timeline {
   width: 100%;
@@ -24,11 +29,10 @@ body {
   margin: 0 auto;
   */
 }
-#formframe {
+.inner {
   width: 100%;
   max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
+  padding: 0 30px;
 }
 .formpad {
   padding: 10px 0;
@@ -68,6 +72,7 @@ label {
   line-height: 24px;
   display: block;
   color: #606060;
+  text-align: center;
 }
 .notes {
   font-size: 14px;
@@ -81,6 +86,16 @@ label {
   border: none;
   background-color: #0d82df;
   color: #fff;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn:focus {
+  text-decoration: underline;
+}
+.btn.sm {
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 500;
 }
 .download-area {
   padding: 20px;
@@ -90,15 +105,18 @@ label {
   text-align: left;
   margin: 0;
   padding: 0;
+  font-size: 0;
 }
 .tabs li {
   display: inline-block;
+  font-size: 0;
 }
 .tabs li a {
   display: inline-block;
   height: 40px;
   line-height: 20px;
-  padding: 10px 20px;
+  padding: 10px 6px;
+  font-size: 14px;
   text-align: center;
   text-decoration: none;
   border-bottom: 3px solid #fff;
@@ -119,4 +137,10 @@ table tbody tr:nth-child(odd) {
 table tbody td {
   line-height: 24px;
   font-size: 16px;
+}
+@media only screen and (min-width: 768px) {
+  .tabs li a {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
 }

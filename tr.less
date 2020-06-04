@@ -1,11 +1,16 @@
 body {
-  margin:10px;
+  margin:0;
   font-family: sans-serif;
   text-align: center;
 }
 * {
   box-sizing: border-box;
   font-variant-ligatures: none;
+}
+header {
+  background-color: rgb(138,198,195);
+  color:#202020;
+  padding: 30px 0;
 }
 #timeline {
   width:100%;
@@ -26,10 +31,15 @@ body {
 }
 
 #formframe {
+  //width:100%;
+  //max-width: 600px;
+  //margin: 30px auto;
+  //padding: 20px;
+}
+.inner {
   width:100%;
   max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
+  padding: 0 30px;
 }
 .formpad {
   padding: 10px 0;
@@ -53,7 +63,7 @@ select {
 }
 
 label {
-  font-size: 16px; line-height: 24px; display: block; color:#606060;
+  font-size: 16px; line-height: 24px; display: block; color:#606060; text-align: center;
 }
 .notes {
   font-size: 14px; line-height: 19px;
@@ -66,6 +76,16 @@ label {
   border:none;
   background-color: rgb(13, 130, 223);
   color:#fff;
+  display: inline-block;
+  text-decoration: none;
+  &:focus {
+    text-decoration: underline;
+  }
+  &.sm {
+    padding: 6px 14px;
+    font-size: 15px;
+    font-weight: 500;
+  }
 }
 .download-area {
   padding: 20px;
@@ -77,14 +97,17 @@ label {
   text-align: left;
   margin: 0;
   padding: 0;
+  font-size: 0;
   //border-bottom: 1px solid #333;
   li {
     display:inline-block;
+    font-size: 0;
     a {
       display: inline-block;
       height:40px;
       line-height: 20px;
-      padding: 10px 20px;
+      padding: 10px 6px;
+      font-size:14px;
       text-align: center;
       text-decoration: none;
       border-bottom:3px solid #fff;
@@ -110,3 +133,14 @@ table {
     }
   }
 }
+@media only screen and (min-width: 768px) {
+  .tabs {
+    li {
+      a {
+        font-size:16px;
+        padding: 10px 20px;
+      }
+    }
+  }
+}
+

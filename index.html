@@ -10,116 +10,135 @@
 </head>
 
 <body>
-  <div id="formframe">
-    <h1>Create a Temporal Range</h1>
-    <p>Enter a name and a geologic time range to generate a chart</p>
-    <form id="set-chart" onSubmit="return false;">
-      <div class="formpad" style="display:none;">
-        <label for="range-type">Select a type:</label>
-        <select name="range-type" id="range-type">
-          <option value="1">Cenozoic (0-66 MYA)</option>
-          <option value="2">Mesozoic (66-251.9 MYA)</option>
-          <option value="3">Paleozoic (251.9-541 MYA)</option>
-          <option value="4" selected="selected">Cenozoic - Paleozoic (0-541 MYA)</option>
-        </select>
+  <div>
+    <header>
+      <div class="inner">
+        <h1>Create a Temporal Range</h1>
+        <p>Enter a name and a geologic time range to generate a chart</p>
       </div>
-      <div class="formpad">
-        <label for="creature-name">Creature Name:</label>
-        <input type="text" name="creature-name" id="creature-name" class="input-large" value="Test">
+    </header>
+    <section>
+      <div class="inner">
+        <form id="set-chart" onSubmit="return false;">
+          <div class="formpad" style="display:none;">
+            <label for="range-type">Select a type:</label>
+            <select name="range-type" id="range-type">
+              <option value="1">Cenozoic (0-66 MYA)</option>
+              <option value="2">Mesozoic (66-251.9 MYA)</option>
+              <option value="3">Paleozoic (251.9-541 MYA)</option>
+              <option value="4" selected="selected">Cenozoic - Paleozoic (0-541 MYA)</option>
+            </select>
+          </div>
+          <div>
+            <ul class="tabs">
+              <li><a href="#range" data-tab-target="range" class="on">Range</a></li>
+              <li><a href="#single" data-tab-target="single">Single Point</a></li>
+              <li><a href="#ranges" data-tab-target="ranges">Multiple Ranges</a></li>
+            </ul>
+          </div>
+          <input type="hidden" id="creature-type" name="creature-type" value="range">
+          <div class="formpad" data-tab="range">
+            <div class="formpad">
+              <label for="creature-name">Creature Name:</label>
+              <input type="text" name="creature-name" id="creature-name" class="input-large" value="Test">
+            </div>
+
+            <label for="range-1">Range:</label>
+            <input type="number" step="0.01" min="0" max="1000" name="range-2" id="range-2" class="input-small" value="500"> until 
+            <input type="number" step="0.01" min="0" max="1000" name="range-1" id="range-1" class="input-small" value="66">
+            <p class="notes">Must be a number from 0 to 1000.</p>
+          </div>
+          <div class="formpad" data-tab="single" style="display: none;">
+            <div class="formpad">
+              <label for="creature-name2">Creature Name:</label>
+              <input type="text" name="creature-name2" id="creature-name2" class="input-large" value="Test">
+            </div>
+            <label for="range-3">Point:</label>
+            <input type="number" step="0.01" min="0" max="1000" name="range-3" id="range-3" class="input-small" value="500">
+            <p class="notes">Must be a number from 0 to 1000.</p>
+          </div>
+          <div class="formpad" data-tab="ranges" style="display: none;">
+            <div><a href="#add-new-range" class="action--add-new-range btn sm">Add New Range</a></div>
+            <div id="range-newbox" style="display:none;">
+              <div class="formpad">
+                <label for="creature-name3">Creature Name:</label>
+                <input type="text" name="creature-name3" id="creature-name3" class="input-large" value="Test">
+              </div>
+              <label for="range-1b">Range:</label>
+              <input type="number" step="0.01" min="0" max="1000" name="range-2b" id="range-2b" class="input-small" value="500"> until 
+              <input type="number" step="0.01" min="0" max="1000" name="range-1b" id="range-1b" class="input-small" value="66">
+              <p class="notes">Must be a number from 0 to 1000.</p>
+              <div><a href="#add-to-ranges" class="action--add-to-range btn sm">Add to Ranges</a></div>
+            </div>
+            <div>
+              <table id="all-ranges">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-cid="1">
+                    <td>Test 1</td>
+                    <td>320</td>
+                    <td>300</td>
+                    <td>
+                      <a href="#delete">[X]</a>
+                    </td>
+                  </tr>
+                  <tr data-cid="2">
+                    <td>Test 2</td>
+                    <td>320</td>
+                    <td>300</td>
+                    <td>
+                      <a href="#delete">[X]</a>
+                    </td>
+                  </tr>
+                  <tr data-cid="3">
+                    <td>Test 3</td>
+                    <td>320</td>
+                    <td>300</td>
+                    <td>
+                      <a href="#delete">[X]</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="formpad">
+            <label for="chart-scale">Pixels per million years:</label>
+            <select name="chart-scale" id="chart-scale">
+              <option value="1">1</option>
+              <option value="2" selected="selected">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="formpad">
+            <label for="chart-direction">Direction</label>
+            <select name="chart-direction" id="chart-direction">
+              <option value="horz">Horizontal</option>
+              <option value="vert" selected="selected">Vertical</option>
+            </select>
+          </div>
+          <div class="formpad">
+            <input type="submit" value="Make Temporal Range Chart" class="btn">
+          </div>
+
+        </form>
       </div>
-      
-      <div>
-        <ul class="tabs">
-          <li><a href="#range" data-tab-target="range" class="on">Range</a></li>
-          <li><a href="#single" data-tab-target="single">Single Point</a></li>
-          <li><a href="#ranges" data-tab-target="ranges">Multiple Ranges</a></li>
-        </ul>
-      </div>
-      <input type="hidden" id="creature-type" name="creature-type" value="range">
-      <div class="formpad" data-tab="range">
-        <label for="range-1">Range:</label>
-        <input type="number" step="0.01" min="0" max="1000" name="range-2" id="range-2" class="input-small" value="500"> until 
-        <input type="number" step="0.01" min="0" max="1000" name="range-1" id="range-1" class="input-small" value="66">
-        <p class="notes">Must be a number from 0 to 1000.</p>
-      </div>
-      <div class="formpad" data-tab="single" style="display: none;">
-        <label for="range-3">Point:</label>
-        <input type="number" step="0.01" min="0" max="1000" name="range-3" id="range-3" class="input-small" value="500">
-        <p class="notes">Must be a number from 0 to 1000.</p>
-      </div>
-      <div class="formpad" data-tab="ranges" style="display: none;">
-        <label for="range-1b">Range:</label>
-        <input type="number" step="0.01" min="0" max="1000" name="range-2b" id="range-2b" class="input-small" value="500"> until 
-        <input type="number" step="0.01" min="0" max="1000" name="range-1b" id="range-1b" class="input-small" value="66">
-        <p class="notes">Must be a number from 0 to 1000.</p>
-        <div><button id="add-to-range">Add to Ranges</button></div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Start</th>
-                <th>End</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-cid="1">
-                <td>Test 1</td>
-                <td>320</td>
-                <td>300</td>
-                <td>
-                  <a href="#delete">[X]</a>
-                </td>
-              </tr>
-              <tr data-cid="2">
-                <td>Test 2</td>
-                <td>320</td>
-                <td>300</td>
-                <td>
-                  <a href="#delete">[X]</a>
-                </td>
-              </tr>
-              <tr data-cid="3">
-                <td>Test 3</td>
-                <td>320</td>
-                <td>300</td>
-                <td>
-                  <a href="#delete">[X]</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-      <div class="formpad">
-        <label for="chart-scale">Pixels per million years:</label>
-        <select name="chart-scale" id="chart-scale">
-          <option value="1">1</option>
-          <option value="2" selected="selected">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-      </div>
-      <div class="formpad">
-        <label for="chart-direction">Direction</label>
-        <select name="chart-direction" id="chart-direction">
-          <option value="horz">Horizontal</option>
-          <option value="vert" selected="selected">Vertical</option>
-        </select>
-      </div>
-      <div class="formpad">
-        <input type="submit" value="Generate Temporal Range Chart" class="btn">
-      </div>
-      
-    </form>
+    </section>
   </div>
   <div id="canvasscroll">
     <div id="canvasbox">
