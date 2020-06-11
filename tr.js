@@ -31,6 +31,11 @@ $(document)
   e.preventDefault();
   $("#range-newbox").slideToggle();
 })
+.on("click", ".action--add-to-range", function(e){
+  e.preventDefault();
+  temporal.addToRange();
+  $("#range-newbox").slideUp();
+})
 ;
 
 var geologictimeeons = [
@@ -215,7 +220,7 @@ var temporal = {
     var rangetype = $("#creature-type").val();
     var range1 = parseFloat($("#range-1").val());
     var range2 = parseFloat($("#range-2").val());
-    var range3 = parseFloat($("#range-3").val());
+    //var range3 = parseFloat($("#range-3").val());
     var scale = parseFloat($("#chart-scale").val());
     this.scale = scale;
     this.size.w = (1000 * this.scale) + (this.margins * 2);
@@ -457,6 +462,38 @@ var temporal = {
       
     }
     $("#all-ranges tbody").html(generatedcode.join("\n"));
+  },
+  addToRange:function(){
+    var range1 = parseFloat($("#range-1b").val()); //Sooner
+    var range2 = parseFloat($("#range-2b").val()); //Later
+    var creaturename = $("#creature-name3").val();
+    if(range1 <= 1000 && range2 <= 1000 && range1 >= 0 && range2 > 0 && range1 < range2){
+      this.ranges.push([creaturename, range2, range1]);
+      this.loadRanges();
+      
+    }
   }
-}
-
+};
+/*
+var temporalMemory = {
+  workingSaveFile:'',
+  savedRanges:null,
+  init:function(){
+    this.savedRanges = localStorage.savedRanges;
+  },
+  checkForLS:function(){
+    if (typeof(Storage) !== "undefined") {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  createSaveFile:function(){
+    
+    if(this.workingSaveFile.length !== ''){
+      var saveMe = {"id":"", "name":"", "ranges":temporal.ranges};
+      this.workingSaveFile = 
+    }
+  }
+};
+*/
